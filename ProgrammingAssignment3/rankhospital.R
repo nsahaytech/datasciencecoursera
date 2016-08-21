@@ -1,0 +1,74 @@
+
+make.true.NA <- function(x) if(is.character(x)||is.factor(x)){
+        is.na(x) <- x=="Not Available"; x} else {
+                x}
+rankhospital <- function(state, outcome, num = "best") {
+        care_outcome<-read.csv("outcome-of-care-measures.csv", colClasses = "character")
+        unique_state<-unique(care_outcome[,7])
+        unique_outcome <- c("heart attack", "heart failure", "pneumonia")
+        if(!state %in% unique_state)
+                stop("invalid state")
+        if(!outcome %in% unique_outcome)
+                stop("invalid outcome")
+        
+        
+        if(outcome == "heart attack"){
+                best_outcome<-care_outcome[, c("Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack","State","Hospital.Name")]
+                colnames(best_outcome)<-c("outcome","State","Hospital.Name")
+                best_outcome_state<-subset(best_outcome, State==state)
+                best_outcome_state[] <- lapply(best_outcome_state, make.true.NA)
+                best_outcome_state<-na.omit(best_outcome_state[order(as.numeric(best_outcome_state$outcome), best_outcome_state$Hospital.Name),])
+                if(num=="best"){
+                        rankedHosiptal=best_outcome_state[1, c("Hospital.Name")]
+                }else if(num=="worst"){
+                        last_rank<-length(best_outcome_state[,1])
+                        
+                        rankedHosiptal<-best_outcome_state[last_rank, c("Hospital.Name")]
+                }else if(num<=length(best_outcome_state[,1])){
+                        rankedHosiptal<-best_outcome_state[num, c("Hospital.Name")]
+                }else{
+                        rankedHospital<-NA
+                }
+                
+        }else if(outcome == "heart failure"){
+                
+                best_outcome<-care_outcome[, c("Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure","State","Hospital.Name")]
+                colnames(best_outcome)<-c("outcome","State","Hospital.Name")
+                best_outcome_state<-subset(best_outcome, State==state)
+                best_outcome_state[] <- lapply(best_outcome_state, make.true.NA)
+                best_outcome_state<-na.omit(best_outcome_state[order(as.numeric(best_outcome_state$outcome), best_outcome_state$Hospital.Name),])
+                if(num=="best"){
+                        rankedHosiptal=best_outcome_state[1, c("Hospital.Name")]
+                }else if(num=="worst"){
+                        last_rank<-length(best_outcome_state[,1])
+                        
+                        rankedHosiptal<-best_outcome_state[last_rank, c("Hospital.Name")]
+                }else if(num<=length(best_outcome_state[,1])){
+                        rankedHosiptal<-best_outcome_state[num, c("Hospital.Name")]
+                }else{
+                        rankedHospital<-NA
+                }
+                
+        }else if(outcome == "pneumonia"){
+                best_outcome<-care_outcome[, c("Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia","State","Hospital.Name")]
+                colnames(best_outcome)<-c("outcome","State","Hospital.Name")
+                best_outcome_state<-subset(best_outcome, State==state)
+                best_outcome_state[] <- lapply(best_outcome_state, make.true.NA)
+                best_outcome_state<-na.omit(best_outcome_state[order(as.numeric(best_outcome_state$outcome), best_outcome_state$Hospital.Name),])
+                if(num=="best"){
+                        rankedHosiptal=best_outcome_state[1, c("Hospital.Name")]
+                }else if(num=="worst"){
+                        last_rank<-length(best_outcome_state[,1])
+                        
+                        rankedHosiptal<-best_outcome_state[last_rank, c("Hospital.Name")]
+                }else if(num<=length(best_outcome_state[,1])){
+                        rankedHosiptal<-best_outcome_state[num, c("Hospital.Name")]
+                }else{
+                        rankedHospital<-NA
+                }
+        }
+        
+        rankedHosiptal
+        
+        
+}
