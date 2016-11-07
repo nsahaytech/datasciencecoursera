@@ -12,5 +12,6 @@ Steps to Run:
 The steps to follow to use run_analysis.R are the following:
 
 1. Manually download the files and unzip them in a folder
-2. Set working directory of R in the folder that contains the folders extracted from the zip
-3. Run run_analysis.R 
+2. Download the data set for the project. (https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip)
+3. Set working directory of R in the folder that contains the source code (run_analysis.R) and data set (UCI HAR Dataset)
+4. Run run_analysis.R 
