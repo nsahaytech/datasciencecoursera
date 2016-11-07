@@ -52,7 +52,7 @@ total_data <- total_data[, extract_features]
 
 # 3. Use descriptive activity names to name the activities in the data set
 
-activities <- read.table("/home/nishant/coursera/R/dataCleansing/UCI HAR Dataset/activity_labels.txt",header=FALSE,colClasses="character")
+activities <- read.table("./UCI HAR Dataset/activity_labels.txt",header=FALSE,colClasses="character")
 
 
 colnames(activities)  <- c('activity','activityType');
@@ -87,7 +87,7 @@ tidyData    = merge(tidyData,activities,by='activity',all.x=TRUE);
 
 
 #print(tidyData[2,])
-write.table(tidyData, file = "./tidy_data.txt", row.name=FALSE)
+write.table(tidyData, file = "./tidyData.txt", row.name=FALSE)
 
 
 
